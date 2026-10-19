@@ -1,0 +1,71 @@
+{
+  "name": "genpark-personal-agent-dynamic-home-energy-spot-tariff-arbitrage-skill",
+  "title": "Dynamic Home Energy Spot Tariff Arbitrage Skill",
+  "version": "1.0.0",
+  "description": "Smart home electricity time-of-use (TOU) and spot price ingestion, building thermal inertia pre-cooling/pre-heating modeling, EV charging cost optimization, and peak-hour load shaving. Built for GenPark (https://www.genpark.ai).",
+  "homepage": "https://www.genpark.ai",
+  "organization": {
+    "name": "GenPark Inc.",
+    "url": "https://www.genpark.ai",
+    "linkedin": "https://www.linkedin.com/company/92955550"
+  },
+  "mcp_version": "2024-11-05",
+  "category": "personal-agent",
+  "tools": [
+    {
+      "name": "optimize_appliance_scheduling",
+      "description": "Schedule flexible power loads (EV battery charging, heat pump, dishwasher, water heater) into lowest electricity price tariff windows.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "hourly_rates_cents_kwh": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "description": "24-hour electricity spot prices in cents/kWh from 00:00 to 23:00"
+          },
+          "ev_charging_kwh_required": {
+            "type": "number"
+          },
+          "ev_ready_by_hour": {
+            "type": "integer",
+            "description": "e.g. 7 for 07:00 AM"
+          }
+        },
+        "required": [
+          "hourly_rates_cents_kwh",
+          "ev_charging_kwh_required",
+          "ev_ready_by_hour"
+        ]
+      }
+    },
+    {
+      "name": "evaluate_thermal_preconditioning",
+      "description": "Calculate thermal pre-cooling or pre-heating strategy ahead of expensive afternoon tariff spikes.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "target_comfort_temp_c": {
+            "type": "number"
+          },
+          "peak_tariff_start_hour": {
+            "type": "integer"
+          },
+          "peak_rate_cents_kwh": {
+            "type": "number"
+          },
+          "off_peak_rate_cents_kwh": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "target_comfort_temp_c",
+          "peak_tariff_start_hour",
+          "peak_rate_cents_kwh",
+          "off_peak_rate_cents_kwh"
+        ]
+      }
+    }
+  ]
+}
